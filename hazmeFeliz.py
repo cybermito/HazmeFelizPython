@@ -12,8 +12,11 @@ def classify(text):
     response = requests.get(url, params={ "data" : text })
 
     if response.ok:
-        responseData = response.json()
-        topMatch = responseData[0]
+        responseData = response.json() #devuelve la información conseguida en formato Json, esta
+        #información viene ordenada de mayor a menor coincidencia en la interpretación. 
+        print(responseData)
+        topMatch = responseData[0] #tomamos el primer valor de la lista que es el que mayor probabilidad tiene de ser
+        #la respuesta correcta. 
         return topMatch
     else:
         response.raise_for_status()
@@ -38,7 +41,7 @@ def run():
     recognized = classify(mensaje) #Pasamos el mensaje a la función de clasificación de aprendizaje
     #Dicha función devolverá un diccionario en formato Json, el cual asignamos el valor de class_name
     #a label que nos servirá para devolver el mensaje al usuario. 
-
+    print(recognized)
     label = recognized["class_name"]
 
     if label == "cosas_buenas":
