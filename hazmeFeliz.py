@@ -1,5 +1,7 @@
 import requests
+from PIL import Image
 from constants import API_kEY
+
 
 # This function will pass your text to the machine learning model
 # and return the top result with the highest confidence
@@ -17,6 +19,7 @@ def classify(text):
         response.raise_for_status()
 
 
+'''
 # CHANGE THIS to something you want your machine learning model to classify
 demo = classify("The text that you want to test")
 
@@ -26,3 +29,29 @@ confidence = demo["confidence"]
 
 # CHANGE THIS to do something different with the result
 print ("result: '%s' with %d%% confidence" % (label, confidence))
+'''
+
+
+def run():
+    mensaje = input("¿Que quieres decirme? ") #Pedimos al usuario que nos diga algo. 
+
+    recognized = classify(mensaje) #Pasamos el mensaje a la función de clasificación de aprendizaje
+    #Dicha función devolverá un diccionario en formato Json, el cual asignamos el valor de class_name
+    #a label que nos servirá para devolver el mensaje al usuario. 
+
+    label = recognized["class_name"]
+
+    if label == "cosas_buenas":
+        print("Eres muy agradable. ¡Gracias!")
+        img = Image.open("img/feliz.jpg")
+        img.show()
+
+    else:
+        print("¡No me simpatizas!")
+        img = Image.open("img/triste.jpg")
+        img.show()
+
+
+
+if __name__ == '__main__':
+    run()
